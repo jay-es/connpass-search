@@ -1,4 +1,4 @@
-export const STORAGE_CITIES = 'form/cities';
+export const FORM_STORAGE = 'form_data';
 
 // Action Types
 const SET_YEAR = 'form/SET_YEAR';
@@ -14,12 +14,18 @@ export type FormState = {
 };
 
 const createInitialState = (): FormState => {
+  const storageData = localStorage.getItem(FORM_STORAGE);
+
+  if (storageData) {
+    return JSON.parse(storageData);
+  }
+
   const now = new Date();
 
   return {
     year: now.getFullYear(),
     month: now.getMonth() + 1,
-    cities: JSON.parse(localStorage.getItem(STORAGE_CITIES) || '[]'),
+    cities: [],
     keyword: '',
   };
 };

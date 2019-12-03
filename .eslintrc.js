@@ -29,6 +29,9 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
     'react/prop-types': 'off',
     '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
+    '@typescript-eslint/camelcase': ['error', {
+      allow: ['keyword_or', 'results_available', 'results_returned', 'results_start'],
+    }],
   },
   settings: {
     'import/resolver': {

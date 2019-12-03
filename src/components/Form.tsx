@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -12,6 +12,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { RootState } from '../stores/store';
 import { setYear, setMonth, setCities, setKeyword } from '../stores/form';
 import cityNames from '../utils/cityNames';
+import fetchEvents from '../utils/fetchEvents';
 import './Form.css';
 
 const thisYear = new Date().getFullYear();
@@ -41,13 +42,22 @@ const Form: React.FC = () => {
     dispatch(setMonth(event.target.value as number));
   };
 
-  const handleButtonClick = (): void => {};
+  const handleKeywordKeydown = (event: KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter') {
+      fetchEvents();
+    }
+  };
 
   return (
     <Grid container justify="center" spacing={1}>
       <Grid item className="Form-kw" xs={12} sm={9} md={3}>
         <FormControl margin="normal" fullWidth>
-          <TextField label="Keyword" value={keyword} onChange={handleKeywordChange} />
+          <TextField
+            label="Keyword"
+            value={keyword}
+            onChange={handleKeywordChange}
+            onKeyDown={handleKeywordKeydown}
+          />
         </FormControl>
       </Grid>
 
@@ -99,7 +109,7 @@ const Form: React.FC = () => {
           <Button
             color="primary"
             variant="contained"
-            onClick={handleButtonClick}
+            onClick={() => fetchEvents()}
             startIcon={<SearchIcon />}
           >
             Search
