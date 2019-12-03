@@ -1,0 +1,13 @@
+.Form-kw   { order: 1; }
+.Form-city { order: 2; }
+.Form-ym   { order: 3; }
+.Form-btn  { order: 4; }
+
+@media (min-width: 600px) and (max-width: 959px) {
+  .Form-city { order: 3; }
+  .Form-ym   { order: 2; }
+}
+
+.Form-btn button {
+  margin-top: 12px;
+}
