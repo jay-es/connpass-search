@@ -10,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import { RootState } from '../stores/store';
-import { setYear, setMonth, setCities, setKeyword } from '../stores/form';
+import { setYear, setMonth, setOrder, setCities, setKeyword } from '../stores/form';
 import cityNames from '../utils/cityNames';
 import fetchEvents from '../utils/fetchEvents';
 import './Form.css';
@@ -25,6 +25,7 @@ const Form: React.FC = () => {
   const cities = useSelector<RootState, string[]>(state => state.form.cities);
   const year = useSelector<RootState, number>(state => state.form.year);
   const month = useSelector<RootState, number>(state => state.form.month);
+  const order = useSelector<RootState, number>(state => state.form.order);
 
   const handleKeywordChange = (event: ChangeEvent<{ value: unknown }>): void => {
     dispatch(setKeyword(event.target.value as string));
@@ -42,6 +43,10 @@ const Form: React.FC = () => {
     dispatch(setMonth(event.target.value as number));
   };
 
+  const handleOrderChange = (event: ChangeEvent<{ value: unknown }>): void => {
+    dispatch(setOrder(event.target.value as number));
+  };
+
   const handleKeywordKeydown = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
       fetchEvents();
@@ -50,7 +55,7 @@ const Form: React.FC = () => {
 
   return (
     <Grid container justify="center" spacing={1}>
-      <Grid item className="Form-kw" xs={12} sm={9} md={3}>
+      <Grid item xs={12} md="auto">
         <FormControl margin="normal" fullWidth>
           <TextField
             label="Keyword"
@@ -61,7 +66,7 @@ const Form: React.FC = () => {
         </FormControl>
       </Grid>
 
-      <Grid item className="Form-city" xs={12} sm={9} md={5}>
+      <Grid item xs={12} md={4}>
         <FormControl margin="normal" fullWidth>
           <InputLabel>City</InputLabel>
           <Select
@@ -80,7 +85,7 @@ const Form: React.FC = () => {
         </FormControl>
       </Grid>
 
-      <Grid item className="Form-ym" xs="auto">
+      <Grid item xs="auto">
         <FormControl margin="normal">
           <InputLabel>Year</InputLabel>
           <Select value={year} onChange={handleYearChange}>
@@ -104,17 +109,26 @@ const Form: React.FC = () => {
         </FormControl>
       </Grid>
 
-      <Grid item className="Form-btn" xs="auto">
+      <Grid item xs="auto">
         <FormControl margin="normal">
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={() => fetchEvents()}
-            startIcon={<SearchIcon />}
-          >
-            Search
-          </Button>
+          <InputLabel>Order</InputLabel>
+          <Select value={order} onChange={handleOrderChange}>
+            <MenuItem value={2}>開催日降順</MenuItem>
+            <MenuItem value={1}>更新日時順</MenuItem>
+            <MenuItem value={3}>新着順</MenuItem>
+          </Select>
         </FormControl>
+      </Grid>
+
+      <Grid item className="Form-btn" xs="auto">
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => fetchEvents()}
+          startIcon={<SearchIcon />}
+        >
+          Search
+        </Button>
       </Grid>
     </Grid>
   );

@@ -5,12 +5,12 @@ import { FORM_STORAGE } from '../stores/form';
 import { RESULTS_STORAGE, setResults } from '../stores/results';
 
 export default function fetchEvents(start = 1): Promise<void> {
-  const { year, month, cities, keyword } = store.getState().form;
+  const { year, month, order, cities, keyword } = store.getState().form;
   const params = {
     start,
+    order,
     keyword: `東京都,${keyword}`,
     keyword_or: cities.join(','),
-    order: 2,
     ym: `${year}${month.toString().padStart(2, '0')}`,
   };
 
