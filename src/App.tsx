@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import EventList from './components/EventList';
 import Form from './components/Form';
+import Pagination from './components/Pagination';
 
 const theme = createMuiTheme({
   palette: { primary: { main: '#a8230b' } },
@@ -23,11 +24,16 @@ const App: React.FC = () => {
       <Container maxWidth="lg">
         <Form />
       </Container>
-      <Box bgcolor="grey.100" my={2} py={3}>
+
+      <Box id="results" bgcolor="grey.100" mt={2} py={3}>
         <Container maxWidth="md">
           <EventList />
         </Container>
       </Box>
+
+      <Container maxWidth="lg">
+        <Pagination />
+      </Container>
     </ThemeProvider>
   );
 };
