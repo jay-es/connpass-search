@@ -1,11 +1,11 @@
 import React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import EventList from './components/EventList';
 import Form from './components/Form';
+import Header from './components/Header';
 import Pagination from './components/Pagination';
 
 const theme = createMuiTheme({
@@ -15,15 +15,13 @@ const theme = createMuiTheme({
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="static">
-        <Typography component="h1" variant="h6" align="center">
-          connpass.tokyo
-        </Typography>
-      </AppBar>
+      <Header />
 
-      <Container maxWidth="lg">
-        <Form />
-      </Container>
+      <Box mt={6}>
+        <Container maxWidth="lg">
+          <Form />
+        </Container>
+      </Box>
 
       <Box id="results" bgcolor="grey.100" mt={2} py={3}>
         <Container maxWidth="md">

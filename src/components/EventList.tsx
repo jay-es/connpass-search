@@ -23,7 +23,7 @@ const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
 
   return (
     <Card>
-      <Link href={event.event_url} underline="none" color="inherit">
+      <Link href={event.event_url} underline="none" color="inherit" target="_blank">
         <CardActionArea className={classes.cardActionArea}>
           <Grid container spacing={2}>
             <Grid item xs={8} sm={9}>
