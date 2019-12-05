@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 // import 'dayjs/locale/ja';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
@@ -10,13 +11,20 @@ import Typography from '@material-ui/core/Typography';
 import { RootState } from '../stores/store';
 import { EventInfo } from '../stores/results';
 
+const useStyles = makeStyles({
+  cardActionArea: {
+    padding: 14,
+  },
+});
+
 const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
+  const classes = useStyles();
   const startedAt = dayjs(event.started_at).format('YYYY/MM/DD (ddd) H:mm');
 
   return (
     <Card>
       <Link href={event.event_url} underline="none" color="inherit">
-        <CardActionArea>
+        <CardActionArea className={classes.cardActionArea}>
           <Grid container spacing={2}>
             <Grid item xs={8} sm={9}>
               <Typography variant="subtitle2">{startedAt} ~</Typography>

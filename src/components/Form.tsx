@@ -1,5 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,7 +14,21 @@ import { RootState } from '../stores/store';
 import { setYear, setMonth, setOrder, setCities, setKeyword } from '../stores/form';
 import cityNames from '../utils/cityNames';
 import fetchEvents from '../utils/fetchEvents';
-import './Form.css';
+
+const useStyles = makeStyles({
+  month: {
+    width: 42,
+  },
+  order: {
+    width: 104,
+  },
+  btn: {
+    marginTop: 28,
+  },
+  searchIcon: {
+    marginRight: 0,
+  },
+});
 
 const startYear = 2010;
 const nextYear = new Date().getFullYear() + 1;
@@ -21,6 +36,7 @@ const yearOptions = [...Array(nextYear - startYear + 1)].map((_, i) => startYear
 const monthOptions = [...Array(12)].map((_, i) => i + 1);
 
 const Form: React.FC = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const keyword = useSelector<RootState, string>(state => state.form.keyword);
   const cities = useSelector<RootState, string[]>(state => state.form.cities);
@@ -98,9 +114,9 @@ const Form: React.FC = () => {
           </Select>
         </FormControl>
 
-        <FormControl margin="normal" className="Form-month">
+        <FormControl margin="normal">
           <InputLabel>Month</InputLabel>
-          <Select value={month} onChange={handleMonthChange}>
+          <Select className={classes.month} value={month} onChange={handleMonthChange}>
             {monthOptions.map(m => (
               <MenuItem key={m} value={m}>
                 {m}
@@ -111,9 +127,9 @@ const Form: React.FC = () => {
       </Grid>
 
       <Grid item xs="auto">
-        <FormControl margin="normal" className="Form-order">
+        <FormControl margin="normal">
           <InputLabel>Order</InputLabel>
-          <Select value={order} onChange={handleOrderChange}>
+          <Select className={classes.order} value={order} onChange={handleOrderChange}>
             <MenuItem value={2}>開催日降順</MenuItem>
             <MenuItem value={1}>更新日時順</MenuItem>
             <MenuItem value={3}>新着順</MenuItem>
@@ -121,12 +137,13 @@ const Form: React.FC = () => {
         </FormControl>
       </Grid>
 
-      <Grid item className="Form-btn" xs="auto">
+      <Grid item xs="auto">
         <Button
+          className={classes.btn}
           color="primary"
           variant="contained"
           onClick={() => fetchEvents()}
-          startIcon={<SearchIcon />}
+          startIcon={<SearchIcon className={classes.searchIcon} />}
         >
           Search
         </Button>
