@@ -27,7 +27,7 @@ const createInitialState = (): FormState => {
   return {
     year: now.getFullYear(),
     month: now.getMonth() + 1,
-    order: 2,
+    order: 3,
     cities: [],
     keyword: '',
   };

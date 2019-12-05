@@ -12,7 +12,9 @@ export type EventInfo = {
   address: string;
   event_url: string;
   accepted: number;
+  waiting: number;
   limit: number | null;
+  updated_at: string;
 };
 export type ResultsState = {
   events: EventInfo[];

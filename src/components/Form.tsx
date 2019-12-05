@@ -130,9 +130,9 @@ const Form: React.FC = () => {
         <FormControl margin="normal">
           <InputLabel>Order</InputLabel>
           <Select className={classes.order} value={order} onChange={handleOrderChange}>
+            <MenuItem value={3}>新着順</MenuItem>
             <MenuItem value={2}>開催日降順</MenuItem>
             <MenuItem value={1}>更新日時順</MenuItem>
-            <MenuItem value={3}>新着順</MenuItem>
           </Select>
         </FormControl>
       </Grid>

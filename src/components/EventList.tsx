@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { RootState } from '../stores/store';
@@ -15,11 +16,15 @@ const useStyles = makeStyles({
   cardActionArea: {
     padding: 14,
   },
+  sep: {
+    color: '#999',
+  },
 });
 
 const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
   const classes = useStyles();
   const startedAt = dayjs(event.started_at).format('YYYY/MM/DD (ddd) H:mm');
+  const updatedAt = dayjs(event.updated_at).format('YYYY/MM/DD H:mm');
 
   return (
     <Card>
@@ -32,7 +37,7 @@ const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
 
             <Grid item xs={4} sm={3}>
               <Typography align="right">
-                {event.accepted}
+                {event.accepted + event.waiting}
                 {event.limit !== null && ` / ${event.limit}`}人
               </Typography>
             </Grid>
@@ -45,9 +50,21 @@ const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
             {event.catch}
           </Typography>
 
-          <Typography variant="caption" component="div">
-            {event.address} {event.place}
-          </Typography>
+          <Grid container>
+            <Grid item xs={12} sm="auto">
+              <Typography variant="caption">{event.address}</Typography>
+            </Grid>
+
+            <Hidden only="xs">
+              <span className={classes.sep}>｜</span>
+            </Hidden>
+
+            <Grid item xs={12} sm="auto">
+              <Typography variant="caption">{event.place}</Typography>
+            </Grid>
+          </Grid>
+
+          <Typography variant="caption">更新: {updatedAt}</Typography>
         </CardActionArea>
       </Link>
     </Card>

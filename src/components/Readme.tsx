@@ -69,10 +69,10 @@ const Readme: React.FC = () => {
             </TableCell>
             <TableCell>
               検索結果の順番を指定します。
-              <br />
+              <br />※
               <Link href="https://connpass.com/about/api/" target="_blank" underline="always">
                 connpass API
-              </Link>{' '}
+              </Link>
               の仕様により、開催日昇順はありません。
             </TableCell>
           </TableRow>
