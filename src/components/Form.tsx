@@ -15,8 +15,9 @@ import cityNames from '../utils/cityNames';
 import fetchEvents from '../utils/fetchEvents';
 import './Form.css';
 
-const thisYear = new Date().getFullYear();
-const yearOptions = [...Array(7)].map((_, i) => thisYear - 3 + i);
+const startYear = 2010;
+const nextYear = new Date().getFullYear() + 1;
+const yearOptions = [...Array(nextYear - startYear + 1)].map((_, i) => startYear + i);
 const monthOptions = [...Array(12)].map((_, i) => i + 1);
 
 const Form: React.FC = () => {
@@ -97,7 +98,7 @@ const Form: React.FC = () => {
           </Select>
         </FormControl>
 
-        <FormControl margin="normal">
+        <FormControl margin="normal" className="Form-month">
           <InputLabel>Month</InputLabel>
           <Select value={month} onChange={handleMonthChange}>
             {monthOptions.map(m => (
@@ -110,7 +111,7 @@ const Form: React.FC = () => {
       </Grid>
 
       <Grid item xs="auto">
-        <FormControl margin="normal">
+        <FormControl margin="normal" className="Form-order">
           <InputLabel>Order</InputLabel>
           <Select value={order} onChange={handleOrderChange}>
             <MenuItem value={2}>開催日降順</MenuItem>

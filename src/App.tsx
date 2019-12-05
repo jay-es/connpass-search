@@ -34,6 +34,12 @@ const App: React.FC = () => {
       <Container maxWidth="lg">
         <Pagination />
       </Container>
+
+      <Box mt={1} pb={2}>
+        <Typography component="footer" variant="caption" align="center">
+          &copy; J. Shindo
+        </Typography>
+      </Box>
     </ThemeProvider>
   );
 };

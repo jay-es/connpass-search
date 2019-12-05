@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
-import 'dayjs/locale/ja';
+// import 'dayjs/locale/ja';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
@@ -16,7 +16,7 @@ const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
   return (
     <Card>
       <Link href={event.event_url} underline="none" color="inherit">
-        <CardContent>
+        <CardActionArea>
           <Grid container spacing={2}>
             <Grid item xs={8} sm={9}>
               <Typography variant="subtitle2">{startedAt} ~</Typography>
@@ -33,17 +33,14 @@ const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
           <Typography variant="h6" color="primary">
             {event.title}
           </Typography>
-          <Typography variant="subtitle2" paragraph>
+          <Typography variant="subtitle2" gutterBottom>
             {event.catch}
           </Typography>
 
           <Typography variant="caption" component="div">
-            住所: {event.address}
+            {event.address} {event.place}
           </Typography>
-          <Typography variant="caption" component="div">
-            場所: {event.place}
-          </Typography>
-        </CardContent>
+        </CardActionArea>
       </Link>
     </Card>
   );
@@ -52,8 +49,12 @@ const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
 const EventList: React.FC = () => {
   const events = useSelector<RootState, EventInfo[]>(state => state.results.events);
 
+  if (!events.length) {
+    return <Typography align="center">No Events Found</Typography>;
+  }
+
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={1}>
       {events.map(ev => (
         <Grid item xs={12} key={ev.event_url}>
           <EventListItem event={ev} />

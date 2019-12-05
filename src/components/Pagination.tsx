@@ -31,7 +31,7 @@ const Pagination: React.FC = () => {
 
     const results = document.getElementById('results') as HTMLElement;
     const { top } = results.getBoundingClientRect();
-    window.scrollBy({ top: top - 8, behavior: 'smooth' });
+    window.scrollBy({ top, behavior: 'smooth' });
   };
 
   return (
