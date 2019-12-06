@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent } from 'react';
+import React, { KeyboardEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -11,7 +11,7 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import { RootState } from '../stores/store';
-import { setYear, setMonth, setOrder, setCities, setKeyword } from '../stores/form';
+import { setYear, setMonth, setOrder, setCities, setKeyword, FormState } from '../stores/form';
 import cityNames from '../utils/cityNames';
 import fetchEvents from '../utils/fetchEvents';
 
@@ -35,34 +35,29 @@ const nextYear = new Date().getFullYear() + 1;
 const yearOptions = [...Array(nextYear - startYear + 1)].map((_, i) => startYear + i);
 const monthOptions = [...Array(12)].map((_, i) => i + 1);
 
+type ChangeEvent = React.ChangeEvent<{ value: unknown }>;
+type Handler = (event: ChangeEvent) => void;
+const useFormState = <T extends keyof FormState>(key: T): [FormState[T], Handler] => {
+  const dispatch = useDispatch();
+  const val = useSelector<RootState, FormState[T]>(state => state.form[key]);
+  const handlers = {
+    year: (event: ChangeEvent) => dispatch(setYear(event.target.value as number)),
+    month: (event: ChangeEvent) => dispatch(setMonth(event.target.value as number)),
+    order: (event: ChangeEvent) => dispatch(setOrder(event.target.value as number)),
+    cities: (event: ChangeEvent) => dispatch(setCities(event.target.value as string[])),
+    keyword: (event: ChangeEvent) => dispatch(setKeyword(event.target.value as string)),
+  };
+
+  return [val, handlers[key]];
+};
+
 const Form: React.FC = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const keyword = useSelector<RootState, string>(state => state.form.keyword);
-  const cities = useSelector<RootState, string[]>(state => state.form.cities);
-  const year = useSelector<RootState, number>(state => state.form.year);
-  const month = useSelector<RootState, number>(state => state.form.month);
-  const order = useSelector<RootState, number>(state => state.form.order);
-
-  const handleKeywordChange = (event: ChangeEvent<{ value: unknown }>): void => {
-    dispatch(setKeyword(event.target.value as string));
-  };
-
-  const handleCitiesChange = (event: ChangeEvent<{ value: unknown }>): void => {
-    dispatch(setCities(event.target.value as string[]));
-  };
-
-  const handleYearChange = (event: ChangeEvent<{ value: unknown }>): void => {
-    dispatch(setYear(event.target.value as number));
-  };
-
-  const handleMonthChange = (event: ChangeEvent<{ value: unknown }>): void => {
-    dispatch(setMonth(event.target.value as number));
-  };
-
-  const handleOrderChange = (event: ChangeEvent<{ value: unknown }>): void => {
-    dispatch(setOrder(event.target.value as number));
-  };
+  const [year, handleYearChange] = useFormState('year');
+  const [month, handleMonthChange] = useFormState('month');
+  const [order, handleOrderChange] = useFormState('order');
+  const [cities, handleCitiesChange] = useFormState('cities');
+  const [keyword, handleKeywordChange] = useFormState('keyword');
 
   const handleKeywordKeydown = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
