@@ -2,7 +2,7 @@ import axios from 'axios';
 import jsonpAdapter from 'axios-jsonp';
 import store from '../stores/store';
 import { FORM_STORAGE } from '../stores/form';
-import { RESULTS_STORAGE, setResults } from '../stores/results';
+import { RESULTS_STORAGE, setResults, ResultsState } from '../stores/results';
 
 export default async function fetchEvents(start = 1, save = true): Promise<void> {
   const formData = store.getState().form;
@@ -15,16 +15,15 @@ export default async function fetchEvents(start = 1, save = true): Promise<void>
     ym: `${year}${month.toString().padStart(2, '0')}`,
   };
 
-  const res = await axios({
+  const { data } = await axios.get<ResultsState>('https://connpass.com/api/v1/event/', {
     params,
     adapter: jsonpAdapter,
-    url: 'https://connpass.com/api/v1/event/',
   });
-  store.dispatch(setResults(res.data));
+  store.dispatch(setResults(data));
 
   if (save) {
     localStorage.setItem(FORM_STORAGE, JSON.stringify(formData));
-    localStorage.setItem(RESULTS_STORAGE, JSON.stringify(res.data));
+    localStorage.setItem(RESULTS_STORAGE, JSON.stringify(data));
   }
 }
 
