@@ -11,7 +11,7 @@ export default async function fetchEvents(start = 1, save = true): Promise<void>
     start,
     order,
     keyword: `東京都,${keyword}`,
-    keyword_or: cities.join(','),
+    keyword_or: cities.map(v => `東京都${v}`).join(),
     ym: `${year}${month.toString().padStart(2, '0')}`,
   };
 
