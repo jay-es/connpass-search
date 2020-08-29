@@ -32,6 +32,19 @@ module.exports = {
     '@typescript-eslint/camelcase': ['error', {
       allow: ['keyword_or', 'results_available', 'results_returned', 'results_start'],
     }],
+    'padding-line-between-statements': [
+      'error',
+      { // ブロックなどの後に空行を入れる
+        blankLine: 'always',
+        prev: ['block-like', 'multiline-expression'],
+        next: '*',
+      },
+      { // return 文などの前に空行を入れる
+        blankLine: 'always',
+        prev: '*',
+        next: ['return', 'throw', 'break', 'continue'],
+      },
+    ],
   },
   settings: {
     'import/resolver': {
