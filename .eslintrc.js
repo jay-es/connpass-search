@@ -45,6 +45,7 @@ module.exports = {
         next: ['return', 'throw', 'break', 'continue'],
       },
     ],
+    'import/prefer-default-export': 'off',
   },
   settings: {
     'import/resolver': {
