@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { RecoilRoot } from 'recoil';
 import { Provider } from 'react-redux';
 import store from './stores/store';
 
@@ -9,7 +10,9 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
   </Provider>,
   document.getElementById('root'),
 );
