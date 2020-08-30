@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
 import React, { KeyboardEvent, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -10,8 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
-import { RootState } from '../stores/store';
-import { setYear, setMonth, setOrder, setCities, setKeyword, FormState } from '../stores/form';
+import { FormState, formState } from '../states/form';
 import cityNames from '../utils/cityNames';
 import { useFetchEvents } from '../utils/useFetchEvents';
 import { isFirstVisit } from '../utils/initStates';
@@ -39,17 +38,12 @@ const monthOptions = [...Array(12)].map((_, i) => i + 1);
 type ChangeEvent = React.ChangeEvent<{ value: unknown }>;
 type Handler = (event: ChangeEvent) => void;
 const useFormState = <T extends keyof FormState>(key: T): [FormState[T], Handler] => {
-  const dispatch = useDispatch();
-  const val = useSelector<RootState, FormState[T]>(state => state.form[key]);
-  const handlers = {
-    year: (event: ChangeEvent) => dispatch(setYear(event.target.value as number)),
-    month: (event: ChangeEvent) => dispatch(setMonth(event.target.value as number)),
-    order: (event: ChangeEvent) => dispatch(setOrder(event.target.value as number)),
-    cities: (event: ChangeEvent) => dispatch(setCities(event.target.value as string[])),
-    keyword: (event: ChangeEvent) => dispatch(setKeyword(event.target.value as string)),
-  };
+  const [val, set] = useRecoilState(formState);
 
-  return [val, handlers[key]];
+  return [
+    val[key],
+    (event: ChangeEvent) => set({ ...val, [key]: event.target.value as FormState[T] }),
+  ];
 };
 
 const Form: React.FC = () => {
