@@ -1,5 +1,5 @@
-import React, { KeyboardEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import React, { KeyboardEvent, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -14,6 +14,7 @@ import { RootState } from '../stores/store';
 import { setYear, setMonth, setOrder, setCities, setKeyword, FormState } from '../stores/form';
 import cityNames from '../utils/cityNames';
 import { useFetchEvents } from '../utils/useFetchEvents';
+import { isFirstVisit } from '../utils/initStates';
 
 const useStyles = makeStyles({
   month: {
@@ -65,6 +66,13 @@ const Form: React.FC = () => {
       fetchEvents();
     }
   };
+
+  useEffect(() => {
+    // 初回訪問時、自動的にデータ取得
+    if (isFirstVisit) {
+      fetchEvents();
+    }
+  }, [fetchEvents]);
 
   return (
     <Grid container justify="center" spacing={1}>

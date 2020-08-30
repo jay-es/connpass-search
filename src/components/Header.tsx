@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Readme from './Readme';
-import { RESULTS_STORAGE } from '../states/results';
+import { isFirstVisit } from '../utils/initStates';
 
 const useStyles = makeStyles({
   h1: {
@@ -31,11 +31,9 @@ const useStyles = makeStyles({
   },
 });
 
-const hasStorage = localStorage.getItem(RESULTS_STORAGE);
-
 const Header: React.FC = () => {
   const classes = useStyles();
-  const [open, setOpen] = useState(!hasStorage);
+  const [open, setOpen] = useState(isFirstVisit);
 
   return (
     <AppBar position="absolute">

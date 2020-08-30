@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -7,19 +7,12 @@ import EventList from './components/EventList';
 import Form from './components/Form';
 import Header from './components/Header';
 import Pagination from './components/Pagination';
-import { useInitEvents } from './utils/useFetchEvents';
 
 const theme = createMuiTheme({
   palette: { primary: { main: '#a8230b' } },
 });
 
 const App: React.FC = () => {
-  const initEvents = useInitEvents();
-
-  useEffect(() => {
-    initEvents();
-  }, [initEvents]);
-
   return (
     <ThemeProvider theme={theme}>
       <Header />

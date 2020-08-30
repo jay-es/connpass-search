@@ -29,23 +29,6 @@ async function fetchEvents(start = 1, save = true): Promise<ResultsState> {
   return data;
 }
 
-export const useInitEvents = () => {
-  const setResults = useSetRecoilState(resultsState);
-
-  return () => {
-    // 初回訪問時、自動的にデータ取得
-    if (!localStorage.getItem(FORM_STORAGE)) {
-      fetchEvents(1, false);
-    }
-
-    // 保存されていたら復元
-    const storageData = localStorage.getItem(RESULTS_STORAGE);
-    if (storageData) {
-      setResults(JSON.parse(storageData));
-    }
-  };
-};
-
 export const useFetchEvents = () => {
   const setResults = useSetRecoilState(resultsState);
 
