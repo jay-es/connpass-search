@@ -1,14 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useRecoilValue } from 'recoil';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { RootState } from '../stores/store';
-import { ResultsState } from '../stores/results';
-import fetchEvents from '../utils/fetchEvents';
+import { resultsState } from '../states/results';
+import { useFetchEvents } from '../utils/useFetchEvents';
 
 const count = 10;
 
@@ -18,7 +17,8 @@ const Pagination: React.FC = () => {
     results_available: resultsAvailable,
     results_start: resultsStart,
     results_returned: resultsReturned,
-  } = useSelector<RootState, ResultsState>(state => state.results);
+  } = useRecoilValue(resultsState);
+  const fetchEvents = useFetchEvents();
 
   const current = events.length ? `${resultsStart}-${resultsStart + resultsReturned - 1}` : '0';
   const prev = resultsStart - count;

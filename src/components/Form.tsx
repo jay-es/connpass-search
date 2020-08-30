@@ -13,7 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { RootState } from '../stores/store';
 import { setYear, setMonth, setOrder, setCities, setKeyword, FormState } from '../stores/form';
 import cityNames from '../utils/cityNames';
-import fetchEvents from '../utils/fetchEvents';
+import { useFetchEvents } from '../utils/useFetchEvents';
 
 const useStyles = makeStyles({
   month: {
@@ -58,6 +58,7 @@ const Form: React.FC = () => {
   const [order, handleOrderChange] = useFormState('order');
   const [cities, handleCitiesChange] = useFormState('cities');
   const [keyword, handleKeywordChange] = useFormState('keyword');
+  const fetchEvents = useFetchEvents();
 
   const handleKeywordKeydown = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {

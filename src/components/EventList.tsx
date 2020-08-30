@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
-// import 'dayjs/locale/ja';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -9,8 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import { RootState } from '../stores/store';
-import { EventInfo } from '../stores/results';
+import { resultsState, EventInfo } from '../states/results';
 
 const useStyles = makeStyles({
   cardActionArea: {
@@ -72,7 +70,7 @@ const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
 };
 
 const EventList: React.FC = () => {
-  const events = useSelector<RootState, EventInfo[]>(state => state.results.events);
+  const { events } = useRecoilValue(resultsState);
 
   if (!events.length) {
     return <Typography align="center">No Events Found</Typography>;
