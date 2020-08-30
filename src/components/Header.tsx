@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Readme from './Readme';
-import { RESULTS_STORAGE } from '../stores/results';
+import { RESULTS_STORAGE } from '../states/results';
 
 const useStyles = makeStyles({
   h1: {
