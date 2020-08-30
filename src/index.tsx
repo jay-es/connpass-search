@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { RecoilRoot } from 'recoil';
-import { Provider } from 'react-redux';
-import store from './stores/store';
 
 import './index.css';
 import App from './App';
@@ -10,11 +8,9 @@ import * as serviceWorker from './serviceWorker';
 import { initStates } from './utils/initStates';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <RecoilRoot initializeState={initStates}>
-      <App />
-    </RecoilRoot>
-  </Provider>,
+  <RecoilRoot initializeState={initStates}>
+    <App />
+  </RecoilRoot>,
   document.getElementById('root'),
 );
 

@@ -1,12 +1,10 @@
 import axios from 'axios';
 import jsonpAdapter from 'axios-jsonp';
-import { useSetRecoilState } from 'recoil';
-import store from '../stores/store';
-import { FORM_STORAGE } from '../stores/form';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { FORM_STORAGE, FormState, formState } from '../states/form';
 import { RESULTS_STORAGE, ResultsState, resultsState } from '../states/results';
 
-async function fetchEvents(start = 1, save = true): Promise<ResultsState> {
-  const formData = store.getState().form;
+async function fetchEvents(formData: FormState, start = 1, save = true): Promise<ResultsState> {
   const { year, month, order, cities, keyword } = formData;
   const params = {
     start,
@@ -21,19 +19,21 @@ async function fetchEvents(start = 1, save = true): Promise<ResultsState> {
     adapter: jsonpAdapter,
   });
 
-  // if (save) {
-  //   localStorage.setItem(FORM_STORAGE, JSON.stringify(formData));
-  //   localStorage.setItem(RESULTS_STORAGE, JSON.stringify(data));
-  // }
+  if (save) {
+    localStorage.setItem(FORM_STORAGE, JSON.stringify(formData));
+    localStorage.setItem(RESULTS_STORAGE, JSON.stringify(data));
+  }
 
   return data;
 }
 
-export const useFetchEvents = () => {
+type FetchEvents = (start?: number, save?: boolean) => Promise<void>;
+export const useFetchEvents = (): FetchEvents => {
+  const formData = useRecoilValue(formState);
   const setResults = useSetRecoilState(resultsState);
 
   return async (start = 1, save = true): Promise<void> => {
-    const res = await fetchEvents(start, save);
+    const res = await fetchEvents(formData, start, save);
     setResults(res);
   };
 };
