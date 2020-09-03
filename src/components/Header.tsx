@@ -8,7 +8,7 @@ import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Readme from './Readme';
+import { Readme } from './Readme';
 import { isFirstVisit } from '../utils/initStates';
 
 const useStyles = makeStyles({
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(isFirstVisit);
 
@@ -63,5 +63,3 @@ const Header: React.FC = () => {
     </AppBar>
   );
 };
-
-export default Header;

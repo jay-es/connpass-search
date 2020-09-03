@@ -11,7 +11,7 @@ import { useFetchEvents } from '../utils/useFetchEvents';
 
 const count = 10;
 
-const Pagination: React.FC = () => {
+export const Pagination: React.FC = () => {
   const {
     events,
     results_available: resultsAvailable,
@@ -52,5 +52,3 @@ const Pagination: React.FC = () => {
     </Box>
   );
 };
-
-export default Pagination;

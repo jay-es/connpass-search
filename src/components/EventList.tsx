@@ -69,7 +69,7 @@ const EventListItem: React.FC<{ event: EventInfo }> = ({ event }) => {
   );
 };
 
-const EventList: React.FC = () => {
+export const EventList: React.FC = () => {
   const { events } = useRecoilValue(resultsState);
 
   if (!events.length) {
@@ -86,5 +86,3 @@ const EventList: React.FC = () => {
     </Grid>
   );
 };
-
-export default EventList;

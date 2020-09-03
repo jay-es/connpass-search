@@ -11,7 +11,7 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import { FormState, formState } from '../states/form';
-import cityNames from '../utils/cityNames';
+import { cityNames } from '../utils/cityNames';
 import { useFetchEvents } from '../utils/useFetchEvents';
 import { isFirstVisit } from '../utils/initStates';
 
@@ -46,7 +46,7 @@ const useFormState = <T extends keyof FormState>(key: T): [FormState[T], Handler
   ];
 };
 
-const Form: React.FC = () => {
+export const Form: React.FC = () => {
   const classes = useStyles();
   const [year, handleYearChange] = useFormState('year');
   const [month, handleMonthChange] = useFormState('month');
@@ -149,5 +149,3 @@ const Form: React.FC = () => {
     </Grid>
   );
 };
-
-export default Form;

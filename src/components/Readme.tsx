@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Readme: React.FC = () => {
+export const Readme: React.FC = () => {
   const classes = useStyles();
 
   return (
@@ -81,5 +81,3 @@ const Readme: React.FC = () => {
     </>
   );
 };
-
-export default Readme;

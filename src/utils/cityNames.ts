@@ -1,4 +1,4 @@
-export default [
+export const cityNames = [
   '千代田区',
   '中央区',
   '港区',
